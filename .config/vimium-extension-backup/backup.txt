@@ -1,0 +1,32 @@
+unmap All
+
+map f LinkHints.activateMode
+
+map i scrollUp
+map k scrollDown
+map j scrollLeft
+map l scrollRight
+
+map J goBack
+map L goForward
+
+div > .vimiumHintMarker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #444b6a;
+    border: 2px solid #e6bebf;
+    padding: 5px 8px; /* Adds 5px padding top/bottom and 8px left/right */
+    border-radius: 999px; /* Makes the corners fully rounded */
+}
+
+div > .vimiumHintMarker span {
+    color: #ffffff; /* Sets text color to white */
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+div > .vimiumHintMarker > .matchingCharacter {
+    color: #d3d3d3; /* Light gray for matching characters */
+}

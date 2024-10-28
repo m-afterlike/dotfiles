@@ -1,0 +1,16 @@
+[	
+	{
+		"name": "RosePine",
+		"description": "ziro theme edit",
+		"usercss": "RosePine/user.css",
+		"schemes": "RosePine/color.ini",
+		"authors": [
+			{
+				"name": "amotay"
+			}
+		],
+		"tags": [
+			"latest"
+		]
+	}
+]

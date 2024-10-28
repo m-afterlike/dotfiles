@@ -1,0 +1,11 @@
+# Exclude:
+
+.config/raycast/
+.config/spicetify/Backup/
+.config/spicetify/CustomApps/
+.config/spicetify/Backup/
+.config/spicetify/Extensions/
+.config/spicetify/Extracted/
+.config/spicetify/config-xpui.ini
+.DS_Store
+**/.DS_Store
