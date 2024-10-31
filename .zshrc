@@ -1,48 +1,48 @@
-# Path to your Oh My Zsh installation.
+# path to zsh installation
 export ZSH="$HOME/.oh-my-zsh"
 
-# Set name of the theme to load.
+# theme name
 ZSH_THEME="robbyrussell"
 
-# Enable case-insensitive completion.
+# case insensitive completion
 CASE_SENSITIVE="false"
 
-# Use hyphen-insensitive completion.
+# hyphen-insensitive completion.
 HYPHEN_INSENSITIVE="true"
 
-# Auto-update Oh My Zsh without prompting.
+# auto-update
 zstyle ':omz:update' mode auto
 
-# Disable auto-setting terminal title.
+# disable auto setting
 DISABLE_AUTO_TITLE="true"
 
-# Enable command auto-correction.
+# enable command auto-correction
 ENABLE_CORRECTION="true"
 
-# Display dots whilst waiting for completion.
+# display dots while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
-# Disable marking untracked files under VCS as dirty.
+# disable marking untracked files as dirty
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Load the plugins.
+# load plugins
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
-# Source Oh My Zsh.
+# source oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
-# Preferred editor for local and remote sessions.
+# prefered editor editor
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='vim'    # Terminal-based editor.
-  export VISUAL='code'   # GUI editor.
+  export EDITOR='vim'
+  export VISUAL='code'
 fi
 
-# Remove startup message.
+# remove startup message
 touch ~/.hushlogin
 
-# Define color and icon variables.
+# define variables
 pink_color="\033[38;2;235;189;187m"
 reset_color="\033[0m"
 blue_color="\033[1;34m"
@@ -51,8 +51,7 @@ bold_pink="\033[1;38;2;235;189;187m"
 directory_icon="󰉋"
 home_icon=""
 
-# Custom function: fancy_ls
-# Displays directory contents with custom icons and colors.
+# fancy_ls function
 fancy_ls() {
   if [ "$PWD" = "$HOME" ]; then
     directory_name="m@afterlike"
@@ -66,7 +65,6 @@ fancy_ls() {
   echo -e "${pink_color}│ ${bold_pink}${current_icon} ${directory_name}${reset_color}"
   echo -e "${pink_color}│${reset_color}"
 
-  # Use 'command' to bypass aliases and ensure original commands are used.
   command /bin/ls -1aF --color=auto 2>/dev/null | command /usr/bin/awk -v pink_color="$pink_color" -v red_color="$red_color" -v reset_color="$reset_color" -v directory_icon="$directory_icon" '
     /^\./ { printf "%s├ %s %s\033[0m\n", pink_color, red_color, $0; next } # Hidden files in red
     /\/$/ { printf "%s├ \033[1;34m%s %s\033[0m\n", pink_color, directory_icon, $0; next }
@@ -83,8 +81,7 @@ fancy_ls() {
   echo -e "${pink_color}╰────────────────────────${reset_color}"
 }
 
-# Custom function: config
-# Changes directory to ~/.config or its subdirectories.
+# config function
 config() {
   if [ -z "$1" ]; then
     builtin cd "$HOME/.config" || echo "Cannot change directory to ~/.config"
@@ -93,7 +90,7 @@ config() {
   fi
 }
 
-# Update outdated packages after running brew commands
+# update outdated packages after running brew commands
 function brew() {
   command brew "$@" 
 
@@ -102,21 +99,19 @@ function brew() {
   fi
 }
 
-# Ensure add-zsh-hook is loaded before using it.
+# load add-zsh-hook
 autoload -U add-zsh-hook
 
-# Hook function to run fancy_ls after changing directories.
+# run fancy_ls after changing directories
 ls_after_cd() {
   fancy_ls
 }
 
-# Add the hook for directory changes.
+# add hook for directory changes
 add-zsh-hook chpwd ls_after_cd
 
-# Custom function: tree
-# Displays the directory tree from the current directory up to root.
+# tree function
 tree() {
-  # Handle edge cases and errors gracefully.
   if [ ! -d "$PWD" ]; then
     echo "Error: Current directory does not exist."
     return 1
@@ -124,7 +119,7 @@ tree() {
 
   local current_dir="${PWD##*/}"
 
-  # If in root directory.
+  # if in root
   if [[ "$PWD" == "/" ]]; then
     echo -e "${pink_color}╭────────────────────────${reset_color}"
     echo -e "${pink_color}│ ${bold_pink}${directory_icon} /${reset_color}"
@@ -136,7 +131,6 @@ tree() {
   echo -e "${pink_color}│ ${bold_pink}${directory_icon} ${current_dir}${reset_color}"
   echo -e "${pink_color}│${reset_color}"
 
-  # Build the tree from the parent directories.
   local indent=""
   local parent_path="$PWD"
 
@@ -144,13 +138,12 @@ tree() {
     parent_path="${parent_path%/*}"
     local parent_dir="${parent_path##*/}"
 
-    # Handle root directory.
+    # handle root directory
     if [[ -z "$parent_path" ]]; then
       parent_path="/"
       parent_dir="/"
     fi
 
-    # Break if parent_path is the same as current or root directory.
     if [[ "$parent_path" == "$PWD" ]] || [[ "$parent_path" == "/" ]]; then
       echo -e "${pink_color}├${indent}${blue_color} ${directory_icon} ${parent_dir}${reset_color}"
       break
@@ -163,7 +156,7 @@ tree() {
   echo -e "${pink_color}╰────────────────────────${reset_color}"
 }
 
-# Simplified 'back' function.
+# back function
 back() {
   local count=${1:-1}
   if ! [[ "$count" =~ ^[0-9]+$ ]]; then
@@ -182,25 +175,23 @@ back() {
   fi
 }
 
-# Application aliases.
+# application aliases
 alias spotify="open -a 'Spotify'"
-alias zen="open -na 'Zen Browser'"  # Opens a new instance.
+alias zen="open -na 'Zen Browser'"
 alias chatgpt="open -a 'ChatGPT'"
 alias discord="open -a 'Discord'"
 
-# System aliases.
+# system aliases
 alias reload="source ~/.zshrc"
 alias matrix="unimatrix"
 alias ls="fancy_ls"
 
-# Remove 'history' and 'rawls' aliases as per your request.
-
-# On startup: run 'fastfetch' if installed.
+# run fastfetch on startup
 if command -v fastfetch &>/dev/null; then
   fastfetch
 else
   echo "Note: 'fastfetch' is not installed."
 fi
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"

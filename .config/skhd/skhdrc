@@ -1,0 +1,43 @@
+# open app shortcuts
+cmd - 1 : open -n -a "kitty"
+cmd - 2 : open -n -a "Zen Browser"
+
+# moves focus between windows
+cmd - i : yabai -m window --focus north
+cmd - j : yabai -m window --focus west
+cmd - k : yabai -m window --focus south
+cmd - l : yabai -m window --focus east
+
+# send window to a space 
+shift + alt - 1 : yabai -m window --space 1
+shift + alt - 2 : yabai -m window --space 2
+shift + alt - 3 : yabai -m window --space 3
+shift + alt - 4 : yabai -m window --space 4
+shift + alt - 5 : yabai -m window --space 5
+
+# focus between spaces
+alt - 1 : yabai -m space --focus 1
+alt - 2 : yabai -m space --focus 2
+alt - 3 : yabai -m space --focus 3
+alt - 4 : yabai -m space --focus 4
+alt - 5 : yabai -m space --focus 5
+
+# window fullscreen
+cmd - return : yabai -m window --toggle zoom-fullscreen
+
+# move window
+shift + cmd - i : yabai -m window --swap north
+shift + cmd - j : yabai -m window --swap west
+shift + cmd - k : yabai -m window --swap south
+shift + cmd - l : yabai -m window --swap east
+
+# increase window size
+cmd + alt - h : yabai -m window --resize left:-40:0
+cmd + alt - j : yabai -m window --resize bottom:0:40
+cmd + alt - k : yabai -m window --resize top:0:-40
+cmd + alt - l : yabai -m window --resize right:40:0
+
+# create a new space and follow focus
+alt - n : yabai -m space --create && \
+                  index="$(yabai -m query --displays --display | jq '.spaces[-1]')" && \
+                  yabai -m space --focus "${index}"
